@@ -1,4 +1,4 @@
-name: Daily Execution
+name: Execução diárias Script Main
 
 on:
   schedule:
@@ -30,4 +30,4 @@ jobs:
       #             yfR
 
       - name: Execute R script
-        run: Rscript scripts/main.R
+        run: Rscript main.R
