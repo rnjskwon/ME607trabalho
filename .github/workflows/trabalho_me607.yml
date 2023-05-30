@@ -18,16 +18,12 @@ jobs:
         with:
           r-version: "4.1.2"
 
-      # - name: Install R packages
-      #   run: |
-      #     Rscript -e "install.packages(c('tidyverse', 'yfR'))"
-
-      #       - name: Set up R dependencies
-      #         uses: r-lib/actions/setup-r-dependencies@v2
-      #         with:
-      #           extra-packages: |
-      #             tidyverse
-      #             yfR
+      - name: Set up R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            tidyverse
+            yfR
 
       - name: Execute R script
         run: Rscript main.R
