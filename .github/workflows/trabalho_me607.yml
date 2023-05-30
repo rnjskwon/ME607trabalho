@@ -1,27 +1,33 @@
-# This workflow warns and then closes issues and PRs that have had no activity for a specified amount of time.
-#
-# You can adjust the behavior by modifying this file.
-# For more information, see:
-# https://github.com/actions/stale
-name: Mark stale issues and pull requests
+name: Daily Execution
 
 on:
   schedule:
-  - cron: '36 13 * * *'
+    - cron: "0 0 * * *" # Run every day at midnight UTC
+  workflow_dispatch:
 
 jobs:
-  stale:
-
+  run_r_script:
+    name: Run R Script
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
-
     steps:
-    - uses: actions/stale@v5
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        stale-issue-message: 'Stale issue message'
-        stale-pr-message: 'Stale pull request message'
-        stale-issue-label: 'no-issue-activity'
-        stale-pr-label: 'no-pr-activity'
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.1.2"
+
+      # - name: Install R packages
+      #   run: |
+      #     Rscript -e "install.packages(c('tidyverse', 'yfR'))"
+
+      #       - name: Set up R dependencies
+      #         uses: r-lib/actions/setup-r-dependencies@v2
+      #         with:
+      #           extra-packages: |
+      #             tidyverse
+      #             yfR
+
+      - name: Execute R script
+        run: Rscript scripts/main.R
